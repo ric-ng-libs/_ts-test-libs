@@ -1,15 +1,11 @@
-<pre>
-  <i><b><u>mini-APPLICATION de 'Test' partiel, de ma Librairie au format Angular Package : </u></b></i>
+<h1>TESTS des libs</h1>
+<div class='remarque'>(C'est bien le code buildé des libs -(dossier /dist/)- qui est utilisé ici)</div>
 
-    Thème : Classes/Interfaces Typescript - générales. (mais Librairie créée au format: Angular Package).
-    Sites :
-            - GitHub : ric-ng-libs/ts-general  (remote branché uniquement sur le dépôt local suivant :
-                                                 /projects/ts-general/.git/, et NON sur le /.git/ de
-                                                la présente application de 'test').
-            - NPM    : @ric-ng/ts-general (défini dans  /projects/ts-general/package.json)
+<div class="zone-boutons">
+  <button routerLink="test-ts-general">Tester ts-general</button>
+  <button routerLink="test-ts-pays">Tester ts-pays</button>
+</div>
 
-</pre>
-
-<br><br><hr/><br><br>
-
-{{ this.aItems | json }}
+<div class="zone-de-test">
+  <router-outlet></router-outlet>
+</div>
