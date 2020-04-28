@@ -2,8 +2,8 @@
 
 
 # /projects/[NomLib]/ ayant, par choix perso., chacune leur propre dépôt local .git, que j'ai moi-même créé donc.
-/projects/ts-general/
-/projects/ts-pays/
+/projects/
+
 
 # compiled output
 /dist
