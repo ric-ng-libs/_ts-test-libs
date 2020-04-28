@@ -1,5 +1,10 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+
+# /projects/[NomLib]/ ayant, par choix perso., chacune leur propre dépôt local .git, que j'ai moi-même créé donc.
+/projects/ts-general/
+/projects/ts-pays/
+
 # compiled output
 /dist
 /tmp
