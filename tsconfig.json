@@ -24,6 +24,13 @@
       ],
       "ts-general/*": [
         "dist/ts-general/*"
+      ],
+
+      "ts-pays": [
+        "dist/ts-pays"
+      ],
+      "ts-pays/*": [
+        "dist/ts-pays/*"
       ]
     }
   },
