@@ -12,7 +12,7 @@ export class AppComponent {
 
   libs: Array<Lib> = [
     {name: "ts-general"},
-    {name: "ts-code-analyzer"},
+    {name: "ts-parser"},
     {name: "ts-pays"},
   ];
 

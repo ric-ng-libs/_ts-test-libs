@@ -191,33 +191,33 @@
         }
       }
     },
-    "ts-code-analyzer": {
+    "ts-parser": {
       "projectType": "library",
-      "root": "projects/ts-code-analyzer",
-      "sourceRoot": "projects/ts-code-analyzer/src",
+      "root": "projects/ts-parser",
+      "sourceRoot": "projects/ts-parser/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/ts-code-analyzer/tsconfig.lib.json",
-            "project": "projects/ts-code-analyzer/ng-package.json"
+            "tsConfig": "projects/ts-parser/tsconfig.lib.json",
+            "project": "projects/ts-parser/ng-package.json"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ts-code-analyzer/src/test.ts",
-            "tsConfig": "projects/ts-code-analyzer/tsconfig.spec.json",
-            "karmaConfig": "projects/ts-code-analyzer/karma.conf.js"
+            "main": "projects/ts-parser/src/test.ts",
+            "tsConfig": "projects/ts-parser/tsconfig.spec.json",
+            "karmaConfig": "projects/ts-parser/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ts-code-analyzer/tsconfig.lib.json",
-              "projects/ts-code-analyzer/tsconfig.spec.json"
+              "projects/ts-parser/tsconfig.lib.json",
+              "projects/ts-parser/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

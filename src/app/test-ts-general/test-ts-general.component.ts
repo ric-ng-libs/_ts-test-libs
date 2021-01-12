@@ -30,7 +30,7 @@ import {
 export class TestTsGeneralComponent implements OnInit {
 
   libraryName: string = "ts-general";
-  libraryDescription: string = "Classes/Interfaces Typescript - générales.";
+  libraryDescription: string = "Classes/Interfaces Typescript - générales";
 
 
   aItems: Array<IItem> = [];

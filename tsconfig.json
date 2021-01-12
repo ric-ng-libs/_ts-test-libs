@@ -25,8 +25,8 @@
       "@ric-ng/ts-pays": [
         "dist/ts-pays"
       ],
-      "@ric-ng/ts-code-analyzer": [
-        "dist/ts-code-analyzer"
+      "@ric-ng/ts-parser": [
+        "dist/ts-parser"
       ]
 
     }

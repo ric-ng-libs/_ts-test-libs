@@ -22,14 +22,14 @@ import { Component, OnInit } from '@angular/core';
 //                                           //    d'erreur de compil./build ici.
 
 @Component({
-  selector: 'app-test-ts-code-analyzer',
-  templateUrl: './test-ts-code-analyzer.component.html',
-  styleUrls: ['./test-ts-code-analyzer.component.css']
+  selector: 'app-test-ts-parser',
+  templateUrl: './test-ts-parser.component.html',
+  styleUrls: ['./test-ts-parser.component.css']
 })
-export class TestTsCodeAnalyzerComponent implements OnInit {
+export class TestTsParserComponent implements OnInit {
 
-  libraryName: string = "ts-code-analyzer";
-  libraryDescription: string = "Analyseur de code.";  
+  libraryName: string = "ts-parser";
+  libraryDescription: string = "Parser";  
 
 
   constructor() {

@@ -29,7 +29,7 @@ import {
 export class TestTsPaysComponent implements OnInit {
   
   libraryName: string = "ts-pays";
-  libraryDescription: string = "Classes/Interfaces Typescript - gestion de Pays.";  
+  libraryDescription: string = "Classes/Interfaces Typescript - gestion de Pays";  
 
   aPays: Array<IPays> = [];
 

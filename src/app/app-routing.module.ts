@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TestTsGeneralComponent } from './test-ts-general/test-ts-general.component';
-import { TestTsCodeAnalyzerComponent } from './test-ts-code-analyzer/test-ts-code-analyzer.component';
+import { TestTsParserComponent } from './test-ts-parser/test-ts-parser.component';
 import { TestTsPaysComponent } from './test-ts-pays/test-ts-pays.component';
 
 
@@ -13,8 +13,8 @@ const routes: Routes = [
   },
 
   {
-    path: 'test-ts-code-analyzer',
-    component: TestTsCodeAnalyzerComponent
+    path: 'test-ts-parser',
+    component: TestTsParserComponent
   },  
 
   {
