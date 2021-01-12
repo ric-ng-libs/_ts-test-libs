@@ -1,16 +1,17 @@
-<pre>
-  <label class='compo_title'>'Test' partiel, de ma Librairie au format Angular Package, <span class='lib-name'>@ric-ng/ts-general</span> : </label>
+<app-test-commun
+  [libraryName]="libraryName"
+  [libraryDescription]="libraryDescription"
+></app-test-commun>
 
-    Thème de librairie : Classes/Interfaces Typescript - générales.
-                        (mais Librairie créée au format: Angular Package).
-    Sites :
-            - GitHub : ric-ng-libs/ts-general  (remote branché uniquement sur le dépôt local suivant :
-                                                 /projects/ts-general/.git/, et NON sur le /.git/ de
-                                                la présente application de 'test').
-            - NPM    : @ric-ng/ts-general (défini dans  /projects/ts-general/package.json)
+<div class="zone-de-test">
+  aItems: {{ this.aItems | json }}
+</div>
 
-</pre>
 
-<hr/><br><br>
+<div class="zone-de-test">
+  list1: {{list1 | json}}
 
-{{ this.aItems | json }}
+  <br>
+
+  list2: {{list2 | json}}
+</div>

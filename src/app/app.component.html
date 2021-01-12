@@ -2,8 +2,7 @@
 <div class='remarque'>(C'est bien le code buildé des libs -(dossier /dist/)- qui est utilisé ici)</div>
 
 <div class="zone-boutons">
-  <button routerLink="test-ts-general">Tester ts-general</button>
-  <button routerLink="test-ts-pays">Tester ts-pays</button>
+  <button *ngFor="let lib of libs" routerLink="test-{{lib.name}}">Tester: {{lib.name}} {{lib.version}}</button>
 </div>
 
 <div class="zone-de-test">

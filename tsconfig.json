@@ -19,19 +19,16 @@
       "dom"
     ],
     "paths": {
-      "ts-general": [
+      "@ric-ng/ts-general": [
         "dist/ts-general"
       ],
-      // "ts-general/*": [
-      //   "dist/ts-general/*"
-      // ],
-
-      "ts-pays": [
+      "@ric-ng/ts-pays": [
         "dist/ts-pays"
       ],
-      // "ts-pays/*": [
-      //   "dist/ts-pays/*"
-      // ]
+      "@ric-ng/ts-code-analyzer": [
+        "dist/ts-code-analyzer"
+      ]
+
     }
   },
   "angularCompilerOptions": {

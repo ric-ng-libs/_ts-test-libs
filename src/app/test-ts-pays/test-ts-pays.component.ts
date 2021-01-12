@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 
-import { Pays, IPays } from 'ts-pays'; // cf. tsconfig.json (baseUrl+paths), la rech. de ce chemin
+import { 
+  Pays, IPays 
+} from '@ric-ng/ts-pays'; // cf. tsconfig.json (baseUrl+paths), la rech. de ce chemin
                                        // NON relatif, mènera à ./dist/ts-pays/package.json -
                                        //  (champ typings...)
                                        // MAIS ATTENTION, cette syntaxe d'import n'est surtout pas celle à
@@ -25,15 +27,18 @@ import { Pays, IPays } from 'ts-pays'; // cf. tsconfig.json (baseUrl+paths), la 
   styleUrls: ['./test-ts-pays.component.css']
 })
 export class TestTsPaysComponent implements OnInit {
+  
+  libraryName: string = "ts-pays";
+  libraryDescription: string = "Classes/Interfaces Typescript - gestion de Pays.";  
 
   aPays: Array<IPays> = [];
 
   constructor() {
     this.aPays = this.aPays.concat([
-      new Pays('0', 'Italie'),
-      new Pays('1', 'France'),
-      new Pays('2', 'Allemagne'),
-      new Pays('23', 'Belgique')
+      new Pays(0, 'Italie'),
+      new Pays(1, 'France'),
+      new Pays(2, 'Allemagne'),
+      new Pays(23, 'Belgique')
     ]);
   }
 

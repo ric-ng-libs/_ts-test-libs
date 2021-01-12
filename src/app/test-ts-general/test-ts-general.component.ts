@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 
-import { Item, IItem } from 'ts-general'; // cf. tsconfig.json (baseUrl+paths), la rech. de ce chemin
+import { 
+  Item, IItem,
+  GenericList
+} from '@ric-ng/ts-general'; // cf. tsconfig.json (baseUrl+paths), la rech. de ce chemin
                                           // NON relatif, mènera à ./dist/ts-general/package.json -
                                           //  (champ typings...)
                                           // MAIS ATTENTION, cette syntaxe d'import n'est surtout pas celle à
@@ -26,13 +29,38 @@ import { Item, IItem } from 'ts-general'; // cf. tsconfig.json (baseUrl+paths), 
 })
 export class TestTsGeneralComponent implements OnInit {
 
+  libraryName: string = "ts-general";
+  libraryDescription: string = "Classes/Interfaces Typescript - générales.";
+
+
   aItems: Array<IItem> = [];
+  list1: GenericList<string>;
+  list2: GenericList<string>;
 
   constructor() {
+
+    this.testsItems();
+    this.testsGenericList();
+  }
+  
+  testsItems(): void {
     this.aItems = this.aItems.concat([
-      new Item('1', 'AAAA'),
-      new Item('2', 'BBB')
+      new Item(1, 'AAAA'),
+      new Item(2, 'BBB')
     ]);
+    
+  }
+
+  testsGenericList(): void {
+        this.list1 = new GenericList<string>();
+        this.list1.setAllowNullElement(true);
+        this.list1.addElements(Array("A",'B',"C",null));
+
+        this.list2 = new GenericList<string>();
+        this.list2.setAllowNullElement(true);
+        this.list2.addElementsFromList(this.list1);
+        this.list2.addElements(Array("D",'E',"F", null));        
+
   }
 
   ngOnInit() {

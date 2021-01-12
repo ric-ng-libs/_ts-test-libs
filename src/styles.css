@@ -12,3 +12,10 @@
 button {
   border-radius: 15px;
 }
+
+.zone-de-test {
+  border: solid blueviolet;
+  margin: 15px;
+  margin-top: 25px;
+  padding: 10px;
+}
