@@ -5,8 +5,15 @@ import { TestTsGeneralComponent } from './test-ts-general/test-ts-general.compon
 import { TestTsParserComponent } from './test-ts-parser/test-ts-parser.component';
 import { TestTsPaysComponent } from './test-ts-pays/test-ts-pays.component';
 
+const initialComponent: any = TestTsParserComponent;
 
 const routes: Routes = [
+
+  {
+    path: '',
+    component: initialComponent
+  },
+
   {
     path: 'test-ts-general',
     component: TestTsGeneralComponent
