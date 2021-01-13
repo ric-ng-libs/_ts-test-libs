@@ -39,7 +39,7 @@ export class TestTsParserComponent implements OnInit {
   }
   
   private test1(stringToParse: IStringToParse): void {
-    const patternsList: OrderedOneMatchPatternsList = new OrderedOneMatchPatternsList();
+    const patternsList: IPatternsList = new OrderedOneMatchPatternsList();
     
     const regExpStringPattern1: IPattern = new RegExpStringPattern("[a-z0-9]+", false);
 
@@ -93,7 +93,7 @@ export class TestTsParserComponent implements OnInit {
             let isBadMatchingOccurencesNumber: boolean = false;
     
             let stringToParseMatchings: StringToParseMatchingsListOrNull;
-            let isStringToParseMatchings: boolean;
+            let match: boolean;
 
             result = new StringToParseMatchingsList();
             stringToParse.savePointerPosition();
@@ -102,8 +102,8 @@ export class TestTsParserComponent implements OnInit {
                     stringToParse
                 );
                 
-                isStringToParseMatchings = (stringToParseMatchings !== null);
-                if (isStringToParseMatchings)  {
+                match = (stringToParseMatchings !== null);
+                if (match)  {
 
                     result.addElementsFromList( stringToParseMatchings );
                     
@@ -115,7 +115,7 @@ export class TestTsParserComponent implements OnInit {
                     stringToParse.incrementPointerPosition(stringToParseMatchings.getTotalLength());
                 }            
     
-            } while(isStringToParseMatchings && !isBadMatchingOccurencesNumber && !stringToParse.isPointerAtTheEnd());
+            } while(match && !isBadMatchingOccurencesNumber && !stringToParse.isPointerAtTheEnd());
     
     
             if (!isBadMatchingOccurencesNumber) {
