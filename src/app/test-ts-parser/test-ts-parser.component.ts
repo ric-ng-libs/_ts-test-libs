@@ -1,17 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 
-import { 
-  IPattern, 
+import {
+  IPattern,
+  IStringPattern,
+  IRegExpStringPattern,
+  IPatternsList,
+  IPatternsFactory,
+  IStringToParse,
+  IStringToParseMatchingsList,
+
+  PatternsFactory,
   StringPattern,
   RegExpStringPattern,
-  IPatternsList,
   OrderedFullMatchPatternsList,
-  OrderedOneMatchPatternsList, 
+  OrderedOneMatchPatternsList,
 
-  IStringToParse,
   StringToParse,
-  IStringToParseMatchingsList,
   StringToParseMatchingsListOrNull,
   StringToParseMatchingsList,
 } from '@ric-ng/ts-parser';
@@ -24,10 +29,10 @@ import {
   templateUrl: './test-ts-parser.component.html',
   styleUrls: ['./test-ts-parser.component.css']
 })
-export class TestTsParserComponent implements OnInit {
+export class TestTsParserComponent {
 
   libraryName: string = "ts-parser";
-  libraryDescription: string = "Parser";  
+  libraryDescription: string = "Parser";
 
 
 
@@ -35,127 +40,73 @@ export class TestTsParserComponent implements OnInit {
 
 
   constructor() {
-    this.test1( this.getStringToParse() );
+    this.test1(this.getStringToParse());
   }
-  
+
   private test1(stringToParse: IStringToParse): void {
-    const patternsList: IPatternsList = new OrderedOneMatchPatternsList();
-    
-    const regExpStringPattern1: IPattern = new RegExpStringPattern("[a-z0-9]+", false);
 
-    const stringPattern1: IPattern = new StringPattern("DEB");
-    const stringPattern2: IPattern = new StringPattern("\n");
-    const stringPattern3: IPattern = new StringPattern("MID", false);
-    const stringPattern4: IPattern = new StringPattern("FIN");
+    const patternsFactory: IPatternsFactory = new PatternsFactory();
 
-    patternsList.addPatterns([
-      // stringPattern1,
+    const stringPattern0: IStringPattern = patternsFactory.getStringPattern(" ", 0, null);
+    const stringPattern1: IStringPattern = patternsFactory.getStringPattern("let ", 1, null, true);
+    const stringPattern2: IStringPattern = patternsFactory.getStringPattern("=", 1, null, true);
+    const stringPattern3: IStringPattern = patternsFactory.getStringPattern(" ", 1, null, false);
+    const stringPattern4: IStringPattern = patternsFactory.getStringPattern("FIN", 1, null, true);
+    const regExpStringPattern1: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("[a-z]{1}[a-z0-9]*[ ]*", 1, 1, false);
+    const regExpStringPattern2: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("[ ]*", 1, 1, false);
+    const regExpStringPattern3: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("[0-9]+[ ]*;", 1, 1, false);
+
+
+    const patternsList: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
+      stringPattern0,
+      stringPattern1,
       regExpStringPattern1,
       stringPattern2,
-      stringPattern3,
-      stringPattern2,
-      stringPattern4
-    ]);
+      regExpStringPattern2,
+      regExpStringPattern3
+      // stringPattern3,
+      // stringPattern2,
+      // stringPattern4
+    ], 1, null);
 
-    this.stringToParseMatchingsList = patternsList.getStringToParseMatchings( stringToParse );
+    this.stringToParseMatchingsList = this.runParser(stringToParse, patternsList);
 
-    // stringToParse.incrementPointerPosition(this.stringToParseMatchingsList.getTotalLength());
-
-    console.log(stringToParse.getPointerPosition());
+    console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
   }
 
   private getStringToParse(): IStringToParse {
-    const result: IStringToParse = new StringToParse( this.getStringToParseAsString() );
-    return(result);
+    const result: IStringToParse = new StringToParse(this.getStringToParseAsString());
+    return (result);
   }
-  
+
   private getStringToParseAsString(): string {
     const result: string = [
-      // "DEB",
-      "ù ù ù",
-      "KbJardin",
-      "aZ99Hu",
-      "mid",
-      "FIN",
-      "autre"
-    ].join("\n");
-    return(result);
+      "let toto = 5;"
+      // "ù ù ù",
+      // "KbJardin",
+      // "aZ99Hu",
+      // "mid",
+      // "FIN",
+      // "autre"
+    ].join(" ");
+    return (result);
   }
 
 
 
-    //@return {Array<IStringToParseMatching> | null} null if matching fails.
-    private getPatternStringToParseMatchings(pattern: IPattern, stringToParse: IStringToParse)
-        : StringToParseMatchingsListOrNull {
-
-        let result: StringToParseMatchingsListOrNull = null;
-        if (!stringToParse.isPointerAtTheEnd()) {
-            let isBadMatchingOccurencesNumber: boolean = false;
+  //@return {StringToParseMatchingsListOrNull} null if matching fails.
+  private runParser(stringToParse: IStringToParse, pattern: IPattern)
+    : StringToParseMatchingsListOrNull {
+    let result: StringToParseMatchingsListOrNull = null;
     
-            let stringToParseMatchings: StringToParseMatchingsListOrNull;
-            let match: boolean;
+    console.log(`===== PARSER - stringToParse:`, stringToParse.getRemainingStringToParse());
 
-            result = new StringToParseMatchingsList();
-            stringToParse.savePointerPosition();
-            do {
-                stringToParseMatchings = pattern.getStringToParseMatchings(
-                    stringToParse
-                );
-                
-                match = (stringToParseMatchings !== null);
-                if (match)  {
+    result = pattern.listStringToParseNextConsecutiveMatchings(stringToParse);
 
-                    result.addElementsFromList( stringToParseMatchings );
-                    
-                    isBadMatchingOccurencesNumber = this.hasFoundTooManyMatchingOccurences(
-                        pattern, 
-                        result.getElementsNumber()
-                    );
-    
-                    stringToParse.incrementPointerPosition(stringToParseMatchings.getTotalLength());
-                }            
-    
-            } while(match && !isBadMatchingOccurencesNumber && !stringToParse.isPointerAtTheEnd());
-    
-    
-            if (!isBadMatchingOccurencesNumber) {
-                isBadMatchingOccurencesNumber = this.hasFoundNotEnoughMatchingOccurences(
-                    pattern, 
-                    result.getElementsNumber()
-                );
-            }
-    
-            if (isBadMatchingOccurencesNumber) {
-                result = null;
-                stringToParse.restoreLastSavedPointerPosition();
+    console.log(`\n\n===== PARSER RESULT :`);
+    console.log(result);
 
-            } else {
-                stringToParse.cancelLastSavedPointerPosition();
-
-            }
-        }        
-
-        return(result);
-    }
-    
-    private hasFoundTooManyMatchingOccurences(pattern: IPattern, matchingOccurencesNumber: number): boolean {
-        let result: boolean = false;
-
-        if (pattern.isDefinedMaxOccurencesNumber()) {
-            result = (matchingOccurencesNumber > pattern.getMaxOccurencesNumber());
-        }
-
-        return(result);
-    }
-
-    private hasFoundNotEnoughMatchingOccurences(pattern: IPattern, matchingOccurencesNumber: number): boolean {
-        const result: boolean =  (matchingOccurencesNumber < pattern.getMinOccurencesNumber());
-        return(result);
-    }  
-  
-
-  ngOnInit() {
-
+    return(result);
   }
 
 }
