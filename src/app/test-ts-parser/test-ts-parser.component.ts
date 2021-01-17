@@ -62,26 +62,27 @@ export class TestTsParserComponent {
     const abstractKeyWord: IStringPattern = patternsFactory.getStringPattern("abstract", 1, 1);
     const classKeyWord: IStringPattern = patternsFactory.getStringPattern("class", 1, 1);
     const identifier: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("[a-z]{1}[a-z0-9]*", 1, 1, false);
-    const blockStartToken: IStringPattern = patternsFactory.getStringPattern("{", 1, 1);
+    const classBlockStartToken: IStringPattern = patternsFactory.getStringPattern("{", 1, 1);
 
-    const blockEndToken: IStringPattern = patternsFactory.getStringPattern("}", 1, 1);
-    const regExpAnyThingBetween: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("\{(.*)\}", 0, 1, false);
+    const classBlockEndToken: IStringPattern = patternsFactory.getStringPattern("}", 1, 1);
+    // const regExpAnyThingBetween: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("\{(.*)\}", 0, 1, false);
+
 
     const patternsList: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
-      // spaces0Null,
+      spaces0Null,
       
-      // patternsFactory.getOrderedFullMatchPatternsList([exportKeyWord, spaces1Null], 0, 1),
+      patternsFactory.getOrderedFullMatchPatternsList([exportKeyWord, spaces1Null], 0, 1),
 
-      // patternsFactory.getOrderedFullMatchPatternsList([abstractKeyWord, spaces1Null], 0, 1),
+      patternsFactory.getOrderedFullMatchPatternsList([abstractKeyWord, spaces1Null], 0, 1),
 
-      // patternsFactory.getOrderedFullMatchPatternsList([classKeyWord, spaces1Null], 1, 1),
+      patternsFactory.getOrderedFullMatchPatternsList([classKeyWord, spaces1Null], 1, 1),
 
-      // identifier,
+      identifier,
 
-      // patternsFactory.getOrderedFullMatchPatternsList([spaces0Null, blockStartToken], 1, 1),
+      patternsFactory.getOrderedFullMatchPatternsList([spaces0Null, classBlockStartToken], 1, 1),
       
-      // blockEndToken
-      blockStartToken, regExpAnyThingBetween, blockEndToken
+      classBlockEndToken
+      // blockStartToken, regExpAnyThingBetween, blockEndToken
 
       // stringPattern0,
       // stringPattern1,
@@ -94,6 +95,10 @@ export class TestTsParserComponent {
       // stringPattern2,
       // stringPattern4
     ], 1, null);
+
+
+    const patternsList2: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
+    ]);
 
     this.stringToParseMatchingsList = this.runParser(stringToParse, patternsList);
 
@@ -108,9 +113,11 @@ export class TestTsParserComponent {
   private getStringToParseAsString(): string {
     const result: string = [
 
-      // "  export     abstract   class NomClasse{}"
+      //"abcdef"
+      "zuiop45"
+      // "  export     abstract   class NomClasse3{}     export      class NomClasse4{}    abstract   class NomClasse5{}   class NomClasse6{}"
       // "  class NomClasse  {}"
-      "{nimporte}"
+      //"{nimporte}"
       //"let toto =5;"
       //"= 55   ;"
       // "ù ù ù",
