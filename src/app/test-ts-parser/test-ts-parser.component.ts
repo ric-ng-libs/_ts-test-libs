@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 
 import {
   IPattern,
+  ILanguagePatternsFactory,
+  ILanguageTokensProvider,
   IStringPattern,
   IRegExpStringPattern,
   IPatternsList,
@@ -15,6 +17,8 @@ import {
   RegExpStringPattern,
   OrderedFullMatchPatternsList,
   OrderedOneMatchPatternsList,
+  LanguageTypescriptPatternsFactory,
+  LanguageTypescriptTokensProvider,
 
   StringToParse,
   StringToParseMatchingsListOrNull,
@@ -38,14 +42,76 @@ export class TestTsParserComponent {
 
   stringToParseMatchingsList: IStringToParseMatchingsList;
 
+  private patternsFactory: IPatternsFactory;
+  private languageTokensProvider: ILanguageTokensProvider;
+  private languagePatternsFactory: ILanguagePatternsFactory;
+
 
   constructor() {
+    
+    this.patternsFactory = new PatternsFactory();
+    this.languageTokensProvider = new LanguageTypescriptTokensProvider();
+    this.languagePatternsFactory = new LanguageTypescriptPatternsFactory(
+      this.patternsFactory, this.languageTokensProvider
+    );
+      
     this.test1(this.getStringToParse());
   }
 
+
   private test1(stringToParse: IStringToParse): void {
 
+    const languageTypescriptClassPattern: IPattern = this.languagePatternsFactory.getClass();
+
+    this.stringToParseMatchingsList = this.runParser(stringToParse, languageTypescriptClassPattern);
+
+    console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
+  }
+  
+
+  private getStringToParseAsString(): string {
+    const result: string = [
+
+      "  export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }   \n  export  \n\r    class Nom_Classe_Z5$ {}    abstract   class \n\r NomClasse5{  }  \r class NomClasse6{}",
+      "  class NomClasseFIN  {\n\r  \n\r}\n\r  "
+    ].join(" ");
+    return (result);
+  }
+
+  private getStringToParse(): IStringToParse {
+    const result: IStringToParse = new StringToParse(this.getStringToParseAsString());
+    return (result);
+  }
+
+
+  //@return {StringToParseMatchingsListOrNull} null if matching fails.
+  private runParser(stringToParse: IStringToParse, pattern: IPattern)
+    : StringToParseMatchingsListOrNull {
+    let result: StringToParseMatchingsListOrNull = null;
+    
+    console.log(`===== PARSER - stringToParse:`, stringToParse.getRemainingStringToParse());
+
+    result = pattern.listStringToParseNextConsecutiveMatchings(stringToParse);
+
+    console.log(`\n\n===== PARSER RESULT :`);
+    console.log(result);
+
+    return(result);
+  }
+
+
+
+
+
+
+
+  private test999(stringToParse: IStringToParse): void {
+
     const patternsFactory: IPatternsFactory = new PatternsFactory();
+    const languageTokensProvider: ILanguageTokensProvider = new LanguageTypescriptTokensProvider();
+    const languagePatternsFactory: ILanguagePatternsFactory = new LanguageTypescriptPatternsFactory(
+      patternsFactory, languageTokensProvider
+    );
 
     const stringPattern0: IStringPattern = patternsFactory.getStringPattern(" ", 0, null);
     const stringPattern1: IStringPattern = patternsFactory.getStringPattern("let ", 1, null, true);
@@ -68,83 +134,100 @@ export class TestTsParserComponent {
     // const regExpAnyThingBetween: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("\{(.*)\}", 0, 1, false);
 
 
-    const patternsList: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
-      spaces0Null,
+    // const patternsList: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
+    //   spaces0Null,
       
-      patternsFactory.getOrderedFullMatchPatternsList([exportKeyWord, spaces1Null], 0, 1),
+    //   patternsFactory.getOrderedFullMatchPatternsList([exportKeyWord, spaces1Null], 0, 1),
 
-      patternsFactory.getOrderedFullMatchPatternsList([abstractKeyWord, spaces1Null], 0, 1),
+    //   patternsFactory.getOrderedFullMatchPatternsList([abstractKeyWord, spaces1Null], 0, 1),
 
-      patternsFactory.getOrderedFullMatchPatternsList([classKeyWord, spaces1Null], 1, 1),
+    //   patternsFactory.getOrderedFullMatchPatternsList([classKeyWord, spaces1Null], 1, 1),
 
-      identifier,
+    //   identifier,
 
-      patternsFactory.getOrderedFullMatchPatternsList([spaces0Null, classBlockStartToken], 1, 1),
+    //   patternsFactory.getOrderedFullMatchPatternsList([spaces0Null, classBlockStartToken], 1, 1),
       
-      classBlockEndToken
-      // blockStartToken, regExpAnyThingBetween, blockEndToken
+    //   classBlockEndToken
+    //   // blockStartToken, regExpAnyThingBetween, blockEndToken
 
-      // stringPattern0,
-      // stringPattern1,
-      // regExpStringPattern1,
-      // stringPattern2,
-      // regExpStringPattern2,
-      // stringPattern2,
-      // regExpStringPattern3
-      // stringPattern3,
-      // stringPattern2,
-      // stringPattern4
-    ], 1, null);
+    //   // stringPattern0,
+    //   // stringPattern1,
+    //   // regExpStringPattern1,
+    //   // stringPattern2,
+    //   // regExpStringPattern2,
+    //   // stringPattern2,
+    //   // regExpStringPattern3
+    //   // stringPattern3,
+    //   // stringPattern2,
+    //   // stringPattern4
+    // ], 1, null);
+
+    const languageTypescriptClassPattern: IPattern = this.languagePatternsFactory.getClass();
+
+    const spaceToken0Null: IPattern = patternsFactory.getStringPattern( 
+      " ",
+      0, null
+    );
+    const spaceToken1Null: IPattern = patternsFactory.getStringPattern( 
+      " ",
+      1, null
+    );    
+
+    const space0Null: IPattern = patternsFactory.getOrderedOneMatchPatternsList([
+      spaceToken1Null
+    ], 0, 1);
+
+    const space1Null: IPattern = patternsFactory.getOrderedOneMatchPatternsList([
+      spaceToken1Null
+    ], 1, 1);
+
+    // languageTypescriptClassPattern = patternsFactory.getOrderedFullMatchPatternsList([
+    //   space0Null,
+      
+    //   patternsFactory.getOrderedFullMatchPatternsList([
+    //     patternsFactory.getStringPattern("export", 1, 1), //getExportToken
+    //     space1Null
+    //   ], 1, 1)
+
+    // ], 1, null);
+
+    // const patternsList: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
+    //   spaces0Null,
+      
+    //   patternsFactory.getOrderedFullMatchPatternsList([exportKeyWord, spaces1Null], 0, 1),
+
+    //   patternsFactory.getOrderedFullMatchPatternsList([abstractKeyWord, spaces1Null], 0, 1),
+
+    //   patternsFactory.getOrderedFullMatchPatternsList([classKeyWord, spaces1Null], 1, 1),
+
+    //   identifier,
+
+    //   patternsFactory.getOrderedFullMatchPatternsList([spaces0Null, classBlockStartToken], 1, 1),
+      
+    //   classBlockEndToken
+    //   // blockStartToken, regExpAnyThingBetween, blockEndToken
+
+    //   // stringPattern0,
+    //   // stringPattern1,
+    //   // regExpStringPattern1,
+    //   // stringPattern2,
+    //   // regExpStringPattern2,
+    //   // stringPattern2,
+    //   // regExpStringPattern3
+    //   // stringPattern3,
+    //   // stringPattern2,
+    //   // stringPattern4
+    // ], 1, null);    
+
+    
 
 
     const patternsList2: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
     ]);
 
-    this.stringToParseMatchingsList = this.runParser(stringToParse, patternsList);
+    this.stringToParseMatchingsList = this.runParser(stringToParse, languageTypescriptClassPattern);
 
     console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
   }
-
-  private getStringToParse(): IStringToParse {
-    const result: IStringToParse = new StringToParse(this.getStringToParseAsString());
-    return (result);
-  }
-
-  private getStringToParseAsString(): string {
-    const result: string = [
-
-      //"abcdef"
-      "zuiop45"
-      // "  export     abstract   class NomClasse3{}     export      class NomClasse4{}    abstract   class NomClasse5{}   class NomClasse6{}"
-      // "  class NomClasse  {}"
-      //"{nimporte}"
-      //"let toto =5;"
-      //"= 55   ;"
-      // "ù ù ù",
-      // "KbJardin",
-      // "aZ99Hu",
-      // "mid",
-      // "FIN",
-      // "autre"
-    ].join(" ");
-    return (result);
-  }
-
-
-
-  //@return {StringToParseMatchingsListOrNull} null if matching fails.
-  private runParser(stringToParse: IStringToParse, pattern: IPattern)
-    : StringToParseMatchingsListOrNull {
-    let result: StringToParseMatchingsListOrNull = null;
-    
-    console.log(`===== PARSER - stringToParse:`, stringToParse.getRemainingStringToParse());
-
-    result = pattern.listStringToParseNextConsecutiveMatchings(stringToParse);
-
-    console.log(`\n\n===== PARSER RESULT :`);
-    console.log(result);
-
-    return(result);
-  }
-
+  
 }
