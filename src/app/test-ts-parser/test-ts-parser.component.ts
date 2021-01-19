@@ -39,7 +39,6 @@ export class TestTsParserComponent {
   libraryDescription: string = "Parser";
 
 
-
   stringToParseMatchingsList: IStringToParseMatchingsList;
 
   private patternsFactory: IPatternsFactory;
