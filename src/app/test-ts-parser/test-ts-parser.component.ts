@@ -11,6 +11,7 @@ import {
   IPatternsFactory,
   IStringToParse,
   IStringToParseMatchingsList,
+  IStringToParseMatchingsListOrNull,
 
   PatternsFactory,
   StringPattern,
@@ -21,8 +22,6 @@ import {
   LanguageTypescriptTokensProvider,
 
   StringToParse,
-  StringToParseMatchingsListOrNull,
-  StringToParseMatchingsList,
 } from '@ric-ng/ts-parser';
 
 
@@ -39,7 +38,7 @@ export class TestTsParserComponent {
   libraryDescription: string = "Parser";
 
 
-  stringToParseMatchingsList: IStringToParseMatchingsList;
+  stringToParseMatchingsListOrNull: IStringToParseMatchingsListOrNull;
 
   private patternsFactory: IPatternsFactory;
   private languageTokensProvider: ILanguageTokensProvider;
@@ -62,17 +61,17 @@ export class TestTsParserComponent {
 
     const languageTypescriptClassPattern: IPattern = this.languagePatternsFactory.getClass();
 
-    this.stringToParseMatchingsList = this.runParser(stringToParse, languageTypescriptClassPattern);
+    this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, languageTypescriptClassPattern);
 
-    console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
+  console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
   }
   
 
   private getStringToParseAsString(): string {
     const result: string = [
 
-      // "  export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }   \n  export  \n\r    class Nom_Classe_Z5$ {}    abstract   class \n\r NomClasse5{  }  \r class NomClasse6{}",
-      "  class NomClasseFIN  {\n\r  \n\r}\n\r  "
+      "  export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }   \n  export  \n\r    class Nom_Classe_Z5$ {}    abstract   class \n\r NomClasse5{  }  \r class NomClasse6{}",
+      // "  class NomClasseFIN  {\n\r  \n\r}\n\r  "
     ].join(" ");
     return (result);
   }
@@ -83,17 +82,17 @@ export class TestTsParserComponent {
   }
 
 
-  //@return {StringToParseMatchingsListOrNull} null if matching fails.
+  //@return {IStringToParseMatchingsListOrNull} null if matching fails.
   private runParser(stringToParse: IStringToParse, pattern: IPattern)
-    : StringToParseMatchingsListOrNull {
-    let result: StringToParseMatchingsListOrNull = null;
+    : IStringToParseMatchingsListOrNull {
+    let result: IStringToParseMatchingsListOrNull = null;
     
-    console.log(`===== PARSER - stringToParse:`, stringToParse.getRemainingStringToParse());
+  console.log(`===== PARSER - stringToParse:`, stringToParse.getRemainingStringToParse());
 
     result = pattern.listStringToParseNextConsecutiveMatchings(stringToParse);
 
-    console.log(`\n\n===== PARSER RESULT :`);
-    console.log(result);
+  console.log(`\n\n===== PARSER RESULT :`);
+  console.log(result);
 
     return(result);
   }
@@ -224,7 +223,7 @@ export class TestTsParserComponent {
     const patternsList2: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
     ]);
 
-    this.stringToParseMatchingsList = this.runParser(stringToParse, languageTypescriptClassPattern);
+    this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, languageTypescriptClassPattern);
 
     console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
   }
