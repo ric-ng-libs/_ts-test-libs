@@ -63,6 +63,10 @@ export class TestTsParserComponent {
 
     this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, languageTypescriptClassPattern);
 
+    if (this.stringToParseMatchingsListOrNull !== null) {
+      this.stringToParseMatchingsListOrNull.interpret();
+    }
+
   console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
   }
   
