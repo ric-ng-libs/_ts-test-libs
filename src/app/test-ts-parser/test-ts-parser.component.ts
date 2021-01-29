@@ -5,6 +5,7 @@ import {
   IPattern,
   ILanguagePatternsFactory,
   ILanguageTokensProvider,
+  ILanguageStringToParseMatchingInterpreter,
   IStringPattern,
   IRegExpStringPattern,
   IPatternsList,
@@ -20,6 +21,7 @@ import {
   OrderedOneMatchPatternsList,
   LanguageTypescriptPatternsFactory,
   LanguageTypescriptTokensProvider,
+  LanguageTypescriptStringToParseMatchingInterpreter,
 
   StringToParse,
 } from '@ric-ng/ts-parser';
@@ -43,14 +45,17 @@ export class TestTsParserComponent {
   private patternsFactory: IPatternsFactory;
   private languageTokensProvider: ILanguageTokensProvider;
   private languagePatternsFactory: ILanguagePatternsFactory;
-
+  private languageStringToParseMatchingInterpreter: ILanguageStringToParseMatchingInterpreter;
 
   constructor() {
     
     this.patternsFactory = new PatternsFactory();
     this.languageTokensProvider = new LanguageTypescriptTokensProvider();
+    this.languageStringToParseMatchingInterpreter = new LanguageTypescriptStringToParseMatchingInterpreter();
     this.languagePatternsFactory = new LanguageTypescriptPatternsFactory(
-      this.patternsFactory, this.languageTokensProvider
+      this.patternsFactory, 
+      this.languageTokensProvider,
+      this.languageStringToParseMatchingInterpreter
     );
       
     this.test1(this.getStringToParse());
@@ -60,28 +65,29 @@ export class TestTsParserComponent {
   private test1(stringToParse: IStringToParse): void {
 
     const languageTypescriptClassPattern: IPattern = this.languagePatternsFactory.getClass();
+    // const pattern: IPattern = this.patternsFactory.getStringPattern("TA"); 
 
     this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, languageTypescriptClassPattern);
+    // this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, pattern);
 
     if (this.stringToParseMatchingsListOrNull !== null) {
       this.stringToParseMatchingsListOrNull.interpret();
     }
 
-  console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
+  //console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
   }
   
 
   private getStringToParseAsString(): string {
     const result: string = [
+      // "TA"
+// "export"
+      "export class NomClasse {}  export class NomClasse2 {} export class NomClasse3 {}"
+      // "  export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }   \n  export  \n\r    "
+      // +"class Nom_Classe_Z5$ {}    abstract   class \n\r NomClasse5{  }  \r class NomClasse6{}",
 
-      "  export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }   \n  export  \n\r    class Nom_Classe_Z5$ {}    abstract   class \n\r NomClasse5{  }  \r class NomClasse6{}",
       // "  class NomClasseFIN  {\n\r  \n\r}\n\r  "
     ].join(" ");
-    return (result);
-  }
-
-  private getStringToParse(): IStringToParse {
-    const result: IStringToParse = new StringToParse(this.getStringToParseAsString());
     return (result);
   }
 
@@ -94,7 +100,7 @@ export class TestTsParserComponent {
   console.log(`===== PARSER - stringToParse:`, stringToParse.getRemainingStringToParse());
 
     result = pattern.listStringToParseNextConsecutiveMatchings(stringToParse);
-
+  // console.clear();
   console.log(`\n\n===== PARSER RESULT :`);
   console.log(result);
 
@@ -102,8 +108,10 @@ export class TestTsParserComponent {
   }
 
 
-
-
+  private getStringToParse(): IStringToParse {
+    const result: IStringToParse = new StringToParse(this.getStringToParseAsString());
+    return (result);
+  }  
 
 
 
@@ -111,9 +119,7 @@ export class TestTsParserComponent {
 
     const patternsFactory: IPatternsFactory = new PatternsFactory();
     const languageTokensProvider: ILanguageTokensProvider = new LanguageTypescriptTokensProvider();
-    const languagePatternsFactory: ILanguagePatternsFactory = new LanguageTypescriptPatternsFactory(
-      patternsFactory, languageTokensProvider
-    );
+    const languagePatternsFactory: ILanguagePatternsFactory = this.languagePatternsFactory;
 
     const stringPattern0: IStringPattern = patternsFactory.getStringPattern(" ", 0, null);
     const stringPattern1: IStringPattern = patternsFactory.getStringPattern("let ", 1, null, true);
@@ -231,5 +237,6 @@ export class TestTsParserComponent {
 
     console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
   }
+
   
 }
