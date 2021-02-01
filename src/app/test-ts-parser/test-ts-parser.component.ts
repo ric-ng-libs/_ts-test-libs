@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 
+import { 
+  IToScreenLogger ,
+  ToScreenLogger
+} from '@ric-ng/ts-general';
 
 import {
   IPattern,
@@ -57,9 +61,13 @@ export class TestTsParserComponent {
       this.languageTokensProvider,
       this.languageStringToParseMatchingInterpreter
     );
+
+    this.testLogger();
       
-    this.test1(this.getStringToParse());
+    // this.test1(this.getStringToParse());
   }
+
+
 
 
   private test1(stringToParse: IStringToParse): void {
@@ -237,6 +245,59 @@ export class TestTsParserComponent {
 
     console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
   }
+
+
+  private testLogger(): void {
+    const logger: IToScreenLogger = new ToScreenLogger();
+
+
+    logger. addLineToLog("Categ 1");
+      logger.startBlock(false);
+      logger.addLineToLog("sous-Categ 10");
+        logger.startBlock();
+        logger.addLineToLog("art 101");
+        logger.addLineToLog(["yo:", logger, "/ LineEnd"]);      
+        logger.addLineToLog("art 102");      
+        logger.endBlock();
+      logger.endBlock();
+
+      logger.startBlock();
+      logger.addLineToLog("sous-Categ 11");
+        logger.startBlock();
+        logger.addLineToLog("art 111");
+        logger.addLineToLog(["yo:", logger, "/ LineEnd"]);      
+        logger.addLineToLog("art 112");      
+        logger.endBlock();
+      logger.endBlock(true);
+
+      
+      logger.addLineToLog("Categ 2");
+      logger.startBlock(false);
+      logger.addLineToLog("sous-Categ 10");
+        logger.startBlock();
+        logger.addLineToLog("art 101");
+        logger.addLineToLog(["yo:", logger, "/ LineEnd"]);      
+        logger.addLineToLog("art 102");      
+        logger.endBlock();
+      logger.endBlock();
+
+      logger.startBlock();
+      logger.addLineToLog("sous-Categ 11");
+        logger.startBlock();
+        logger.addLineToLog("art 111");
+        logger.addLineToLog(["yo:", logger, " / LineEnd"]);      
+        logger.addLineToLog("art 112");      
+        logger.endBlock();
+      logger.endBlock(true);
+
+    logger.outputToConsole();
+    logger.outputToPopup();
+
+    console.log(logger.getLogAsString());
+
+    
+  }
+  
 
   
 }
