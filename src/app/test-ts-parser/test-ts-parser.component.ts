@@ -5,6 +5,7 @@ import {
   ToScreenLogger,
 } from '@ric-ng/ts-general';
 
+
 import {
   IPattern,
   ILanguagePatternsFactory,
@@ -62,9 +63,12 @@ export class TestTsParserComponent {
       this.languageStringToParseMatchingInterpreter
     );
 
+    //const w: string = "\n\n OO \r AA  \n\r UU \r\n ZZ";    console.log(w.replaceCRLFBy());
     // this.testLogger();
       
     this.test1(this.getStringToParse());
+
+
   }
 
 
@@ -79,7 +83,7 @@ export class TestTsParserComponent {
     // this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, pattern);
 
     if (this.stringToParseMatchingsListOrNull !== null) {
-      this.stringToParseMatchingsListOrNull.interpret();
+      // this.stringToParseMatchingsListOrNull.interpret();
     }
 
   //console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
@@ -90,9 +94,9 @@ export class TestTsParserComponent {
     const result: string = [
       // "TA"
 // "export"
-      "export class NomClasse {}  export class NomClasse2 {} export class NomClasse3 {}"
-      // "  export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }   \n  export  \n\r    "
-      // +"class Nom_Classe_Z5$ {}    abstract   class \n\r NomClasse5{  }  \r class NomClasse6{}",
+      //"   export class NomClasse {}  export class NomClasse2 {} export class NomClasse3 {}"
+      "  export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }   \n  export  \n\r    "
+       +"class Nom_Classe_Z5$ {}    abstract   class \n\r NomClasse5{  }  \r class NomClasse6{}",
 
       // "  class NomClasseFIN  {\n\r  \n\r}\n\r  "
     ].join(" ");
@@ -111,7 +115,7 @@ export class TestTsParserComponent {
   result = pattern.setStringablesLogger(toScreenLogger).listStringToParseNextConsecutiveMatchings(stringToParse);
   // console.clear();
   console.log(`\n\n===== PARSER RESULT :`);
-  console.log(result);
+  // console.log(result);
 
   toScreenLogger.outputToConsole();
 
@@ -305,3 +309,4 @@ export class TestTsParserComponent {
 
   
 }
+
