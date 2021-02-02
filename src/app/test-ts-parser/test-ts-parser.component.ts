@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { 
   IToScreenLogger ,
-  ToScreenLogger
+  ToScreenLogger,
 } from '@ric-ng/ts-general';
 
 import {
@@ -62,9 +62,9 @@ export class TestTsParserComponent {
       this.languageStringToParseMatchingInterpreter
     );
 
-    this.testLogger();
+    // this.testLogger();
       
-    // this.test1(this.getStringToParse());
+    this.test1(this.getStringToParse());
   }
 
 
@@ -107,10 +107,14 @@ export class TestTsParserComponent {
     
   console.log(`===== PARSER - stringToParse:`, stringToParse.getRemainingStringToParse());
 
-    result = pattern.listStringToParseNextConsecutiveMatchings(stringToParse);
+  const toScreenLogger: IToScreenLogger = new ToScreenLogger();
+  result = pattern.setStringablesLogger(toScreenLogger).listStringToParseNextConsecutiveMatchings(stringToParse);
   // console.clear();
   console.log(`\n\n===== PARSER RESULT :`);
   console.log(result);
+
+  toScreenLogger.outputToConsole();
+
 
     return(result);
   }
