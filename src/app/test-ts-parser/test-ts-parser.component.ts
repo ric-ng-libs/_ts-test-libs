@@ -63,11 +63,10 @@ export class TestTsParserComponent {
       this.languageStringToParseMatchingInterpreter
     );
 
-    //const w: string = "\n\n OO \r AA  \n\r UU \r\n ZZ";    console.log(w.replaceCRLFBy());
     // this.testLogger();
+    // this.testNativeClassesEnhancement();
       
     this.test1(this.getStringToParse());
-
 
   }
 
@@ -308,6 +307,21 @@ export class TestTsParserComponent {
   }
   
 
+  private testNativeClassesEnhancement(): void {
+    const w: string = "\n\n OO \r AA  \n\r UU \r\n ZZ";    
+    console.log(w.replaceCRLFBy());
+
+    const y: string = String.crDefaultReplacementString;
+    console.log(y);
+
+    
+    // const z: number = Array.x;
+    // console.log(z);
+
+    // const a: Array<number> = Array(0,5);
+    // a.add10();
+    // console.log(a);    
+  }
   
 }
 
