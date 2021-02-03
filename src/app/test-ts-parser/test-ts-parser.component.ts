@@ -93,8 +93,9 @@ export class TestTsParserComponent {
   private getStringToParseAsString(): string {
     const result: string = [
       // "TA"
-// "export"
+//  "  export expor "
       //"   export class NomClasse {}  export class NomClasse2 {} export class NomClasse3 {}"
+
       "  export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }   \n  export  \n\r    "
        +"class Nom_Classe_Z5$ {}    abstract   class \n\r NomClasse5{  }  \r class NomClasse6{}",
 
