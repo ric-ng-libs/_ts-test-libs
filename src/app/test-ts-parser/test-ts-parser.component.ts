@@ -66,39 +66,59 @@ export class TestTsParserComponent {
     // this.testLogger();
     // this.testNativeClassesEnhancement();
       
+    // this.test1ForClass(this.getStringToParseForClass());
     this.test1(this.getStringToParse());
+
 
   }
 
 
 
 
-  private test1(stringToParse: IStringToParse): void {
+  private test1ForClass(stringToParse: IStringToParse): void {
 
     const languageTypescriptClassPattern: IPattern = this.languagePatternsFactory.getClass();
-    // const pattern: IPattern = this.patternsFactory.getStringPattern("TA"); 
 
     this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, languageTypescriptClassPattern);
-    // this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, pattern);
 
     if (this.stringToParseMatchingsListOrNull !== null) {
       // this.stringToParseMatchingsListOrNull.interpret();
     }
 
-  //console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
   }
+  private test1(stringToParse: IStringToParse): void {
+
+    const pattern1: IPattern = this.patternsFactory.getOrderedOneMatchPatternsList([
+      this.patternsFactory.getStringPattern("A"),
+      this.patternsFactory.getStringPattern("B")
+    ]);
+    const pattern2: IPattern = this.patternsFactory.getRegExpStringPattern("(A|B)"); 
+
+    this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, pattern1);
+    // this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, pattern2);
+
+  }  
   
 
-  private getStringToParseAsString(): string {
+  private getStringToParseAsStringForClass(): string {
     const result: string = [
-      // "TA"
-//  "  export expor "
+
+      //  "  export expor "
       //"   export class NomClasse {}  export class NomClasse2 {} export class NomClasse3 {}"
 
-      "  export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }   \n  export  \n\r    "
-       +"class Nom_Classe_Z5$ {}    abstract   class \n\r NomClasse5{  }  \r class NomClasse6{}",
+      // "  export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }   \n  export  \n\r    "
+      //  +"class Nom_Classe_Z5$ {}    abstract   class \n\r NomClasse5{  }  \r class NomClasse6{}",
 
       // "  class NomClasseFIN  {\n\r  \n\r}\n\r  "
+
+    ].join(" ");
+    return (result);
+  }
+  private getStringToParseAsString(): string {
+    const result: string = [
+
+      "ABAABB"
+
     ].join(" ");
     return (result);
   }
@@ -124,6 +144,10 @@ export class TestTsParserComponent {
   }
 
 
+  private getStringToParseForClass(): IStringToParse {
+    const result: IStringToParse = new StringToParse(this.getStringToParseAsStringForClass());
+    return (result);
+  }  
   private getStringToParse(): IStringToParse {
     const result: IStringToParse = new StringToParse(this.getStringToParseAsString());
     return (result);
