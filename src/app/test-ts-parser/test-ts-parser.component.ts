@@ -106,8 +106,8 @@ export class TestTsParserComponent {
       //  "  export expor "
       //"   export class NomClasse {}  export class NomClasse2 {} export class NomClasse3 {}"
 
-      // "  export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }   \n  export  \n\r    "
-      //  +"class Nom_Classe_Z5$ {}    abstract   class \n\r NomClasse5{  }  \r class NomClasse6{}",
+      "  export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }   \n  export  \n\r    "
+       +"class Nom_Classe_Z5$ {}    abstract   class \n\r NomClasse5{  }  \r class NomClasse6{}",
 
       // "  class NomClasseFIN  {\n\r  \n\r}\n\r  "
 
@@ -138,6 +138,13 @@ export class TestTsParserComponent {
   // console.log(result);
 
   toScreenLogger.outputToConsole();
+  // toScreenLogger.outputToPopup();
+  // // window.document.body.innerHTML = toScreenLogger.getLogAsString();
+  // console.log(window.document.body);
+  // console.log(window.document.body.appendChild);
+  // console.log(window.document.body.appendRawText);
+  // console.log(window.document.body instanceof HTMLElement);
+  // window.document.body.appendRawText(toScreenLogger.getLogAsString());
 
 
     return(result);
