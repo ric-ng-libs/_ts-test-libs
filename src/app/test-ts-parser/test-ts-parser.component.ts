@@ -3,6 +3,7 @@ import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { 
   IToScreenLogger ,
   ToScreenLogger,
+  HTMLFactory
 } from '@ric-ng/ts-general';
 
 
@@ -74,14 +75,14 @@ export class TestTsParserComponent implements AfterViewInit {
     // this.testLogger();
     // this.testNativeClassesEnhancement();
       
-    // this.test1ForClass(this.getStringToParseForClass());
-    this.test1(this.getStringToParse());
+    this.test1ForClass(this.getStringToParseForClass());
+    // this.test1Basic(this.getStringToParse());
 
 
   }
 
   ngAfterViewInit(): void {
-    // this.testHTMLLogger();
+    // this.testHTML();
   }
 
 
@@ -98,7 +99,7 @@ export class TestTsParserComponent implements AfterViewInit {
     }
 
   }
-  private test1(stringToParse: IStringToParse): void {
+  private test1Basic(stringToParse: IStringToParse): void {
 
     const pattern1: IPattern = this.patternsFactory.getOrderedOneMatchPatternsList([
       this.patternsFactory.getStringPattern("A"),
@@ -154,7 +155,7 @@ export class TestTsParserComponent implements AfterViewInit {
   private loggerOutput(): void {
 
     window.setTimeout(() => {
-      this.logger.outputToHTMLElement(this.loggerDiv.nativeElement); //Marche pas si pas de timeout !
+      // this.logger.outputToHTMLElement(this.loggerDiv.nativeElement); //Marche pas si pas de timeout !
     }, 1);
 
     this.logger.outputToConsole();
@@ -171,130 +172,6 @@ export class TestTsParserComponent implements AfterViewInit {
     return (result);
   }  
 
-
-
-  // private test999(stringToParse: IStringToParse): void {
-
-  //   const patternsFactory: IPatternsFactory = new PatternsFactory();
-  //   const languageTokensProvider: ILanguageTokensProvider = new LanguageTypescriptTokensProvider();
-  //   const languagePatternsFactory: ILanguagePatternsFactory = this.languagePatternsFactory;
-
-  //   const stringPattern0: IStringPattern = patternsFactory.getStringPattern(" ", 0, null);
-  //   const stringPattern1: IStringPattern = patternsFactory.getStringPattern("let ", 1, null, true);
-  //   const regExpStringPattern1: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("[a-z]{1}[a-z0-9]*[ ]*", 1, 1, false);
-  //   const stringPattern2: IStringPattern = patternsFactory.getStringPattern("=", 1, null, true);
-  //   // const stringPattern3: IStringPattern = patternsFactory.getStringPattern(" ", 0, null, false);
-  //   // const stringPattern4: IStringPattern = patternsFactory.getStringPattern("FIN", 1, null, true);
-  //   const regExpStringPattern2: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("[ ]*", 0, 1, false);
-  //   const regExpStringPattern3: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("[0-9]+[ ]*;", 0, 1, false);
-
-  //   const spaces0Null: IStringPattern = patternsFactory.getStringPattern(" ", 0, null);
-  //   const spaces1Null: IStringPattern = patternsFactory.getStringPattern(" ", 1, null);
-  //   const exportKeyWord: IStringPattern = patternsFactory.getStringPattern("export", 1, 1);
-  //   const abstractKeyWord: IStringPattern = patternsFactory.getStringPattern("abstract", 1, 1);
-  //   const classKeyWord: IStringPattern = patternsFactory.getStringPattern("class", 1, 1);
-  //   const identifier: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("[a-z]{1}[a-z0-9]*", 1, 1, false);
-  //   const classBlockStartToken: IStringPattern = patternsFactory.getStringPattern("{", 1, 1);
-
-  //   const classBlockEndToken: IStringPattern = patternsFactory.getStringPattern("}", 1, 1);
-  //   // const regExpAnyThingBetween: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("\{(.*)\}", 0, 1, false);
-
-
-  //   // const patternsList: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
-  //   //   spaces0Null,
-      
-  //   //   patternsFactory.getOrderedFullMatchPatternsList([exportKeyWord, spaces1Null], 0, 1),
-
-  //   //   patternsFactory.getOrderedFullMatchPatternsList([abstractKeyWord, spaces1Null], 0, 1),
-
-  //   //   patternsFactory.getOrderedFullMatchPatternsList([classKeyWord, spaces1Null], 1, 1),
-
-  //   //   identifier,
-
-  //   //   patternsFactory.getOrderedFullMatchPatternsList([spaces0Null, classBlockStartToken], 1, 1),
-      
-  //   //   classBlockEndToken
-  //   //   // blockStartToken, regExpAnyThingBetween, blockEndToken
-
-  //   //   // stringPattern0,
-  //   //   // stringPattern1,
-  //   //   // regExpStringPattern1,
-  //   //   // stringPattern2,
-  //   //   // regExpStringPattern2,
-  //   //   // stringPattern2,
-  //   //   // regExpStringPattern3
-  //   //   // stringPattern3,
-  //   //   // stringPattern2,
-  //   //   // stringPattern4
-  //   // ], 1, null);
-
-  //   const languageTypescriptClassPattern: IPattern = this.languagePatternsFactory.getClass();
-
-  //   const spaceToken0Null: IPattern = patternsFactory.getStringPattern( 
-  //     " ",
-  //     0, null
-  //   );
-  //   const spaceToken1Null: IPattern = patternsFactory.getStringPattern( 
-  //     " ",
-  //     1, null
-  //   );    
-
-  //   const space0Null: IPattern = patternsFactory.getOrderedOneMatchPatternsList([
-  //     spaceToken1Null
-  //   ], 0, 1);
-
-  //   const space1Null: IPattern = patternsFactory.getOrderedOneMatchPatternsList([
-  //     spaceToken1Null
-  //   ], 1, 1);
-
-  //   // languageTypescriptClassPattern = patternsFactory.getOrderedFullMatchPatternsList([
-  //   //   space0Null,
-      
-  //   //   patternsFactory.getOrderedFullMatchPatternsList([
-  //   //     patternsFactory.getStringPattern("export", 1, 1), //getExportToken
-  //   //     space1Null
-  //   //   ], 1, 1)
-
-  //   // ], 1, null);
-
-  //   // const patternsList: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
-  //   //   spaces0Null,
-      
-  //   //   patternsFactory.getOrderedFullMatchPatternsList([exportKeyWord, spaces1Null], 0, 1),
-
-  //   //   patternsFactory.getOrderedFullMatchPatternsList([abstractKeyWord, spaces1Null], 0, 1),
-
-  //   //   patternsFactory.getOrderedFullMatchPatternsList([classKeyWord, spaces1Null], 1, 1),
-
-  //   //   identifier,
-
-  //   //   patternsFactory.getOrderedFullMatchPatternsList([spaces0Null, classBlockStartToken], 1, 1),
-      
-  //   //   classBlockEndToken
-  //   //   // blockStartToken, regExpAnyThingBetween, blockEndToken
-
-  //   //   // stringPattern0,
-  //   //   // stringPattern1,
-  //   //   // regExpStringPattern1,
-  //   //   // stringPattern2,
-  //   //   // regExpStringPattern2,
-  //   //   // stringPattern2,
-  //   //   // regExpStringPattern3
-  //   //   // stringPattern3,
-  //   //   // stringPattern2,
-  //   //   // stringPattern4
-  //   // ], 1, null);    
-
-    
-
-
-  //   const patternsList2: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
-  //   ]);
-
-  //   this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, languageTypescriptClassPattern);
-
-  //   console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
-  // }
 
 
   private testLogger(): void {
@@ -348,16 +225,32 @@ export class TestTsParserComponent implements AfterViewInit {
   }
 
 
-  private testHTMLLogger(): void {
+  private testHTML(): void {
+
+
     this.testLogger();
+
+    const loggerDiv: HTMLElement  = window.document.querySelector("#loggerDivId");
+    loggerDiv.appendRawText("xxxxxxxx\n\nxYYYxxxxxx\n\n");
+
+    // const autreDiv: HTMLElement = HTMLFactory.createDiv();
+    // autreDiv.style.border="solid red";
+    // autreDiv.appendRawText("Ligne1\nLigne2");
+    // HTMLFactory.getBody().appendChild(autreDiv);
+
+
+
+    // tslint:disable-next-line:no-string-literal
+    // loggerDiv.addHTML(HTMLElement["createTextNode"]("QQQQQQQQQQ\n".toHTML())); //Cas particulier pour HTMLElement et l'ajout de static.
+
     
     window.setTimeout(() => {
-      this.logger.outputToHTMLElement(this.loggerDiv.nativeElement); //Marche pas si pas de timeout !
+      this.logger.outputToHTMLElement(this.loggerDiv.nativeElement); //Marche pas si pas de timeout ! Pourtant bien dans le ngAfterViewInit.
       this.logger.outputToHTMLBody();  //<< Et si je sors cette ligne du setTimeout, l'ajout dynamique dans le ViewChild, ci-dessus, échoue.
     }, 1);
 
     // this.logger.outputToHTMLBody();
-    this.logger.outputToHTMLElement(window.document.querySelector("#loggerDivId")); //OK, marche sans problème
+    this.logger.outputToHTMLElement(loggerDiv); //OK, marche sans problème
 
   }
  
@@ -370,6 +263,8 @@ export class TestTsParserComponent implements AfterViewInit {
     const y: string = String.crDefaultReplacementString;
     console.log(y);
 
+    const zz: string = w.toHTML();
+    console.log(zz);
 
     // const z: number = Array.x;
     // console.log(z);
@@ -378,5 +273,136 @@ export class TestTsParserComponent implements AfterViewInit {
     // a.add10();
     // console.log(a);    
   }
+
+
+
+
+
+/*
+  private test999(stringToParse: IStringToParse): void {
+
+    const patternsFactory: IPatternsFactory = new PatternsFactory();
+    const languageTokensProvider: ILanguageTokensProvider = new LanguageTypescriptTokensProvider();
+    const languagePatternsFactory: ILanguagePatternsFactory = this.languagePatternsFactory;
+
+    const stringPattern0: IStringPattern = patternsFactory.getStringPattern(" ", 0, null);
+    const stringPattern1: IStringPattern = patternsFactory.getStringPattern("let ", 1, null, true);
+    const regExpStringPattern1: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("[a-z]{1}[a-z0-9]*[ ]*", 1, 1, false);
+    const stringPattern2: IStringPattern = patternsFactory.getStringPattern("=", 1, null, true);
+    // const stringPattern3: IStringPattern = patternsFactory.getStringPattern(" ", 0, null, false);
+    // const stringPattern4: IStringPattern = patternsFactory.getStringPattern("FIN", 1, null, true);
+    const regExpStringPattern2: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("[ ]*", 0, 1, false);
+    const regExpStringPattern3: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("[0-9]+[ ]*;", 0, 1, false);
+
+    const spaces0Null: IStringPattern = patternsFactory.getStringPattern(" ", 0, null);
+    const spaces1Null: IStringPattern = patternsFactory.getStringPattern(" ", 1, null);
+    const exportKeyWord: IStringPattern = patternsFactory.getStringPattern("export", 1, 1);
+    const abstractKeyWord: IStringPattern = patternsFactory.getStringPattern("abstract", 1, 1);
+    const classKeyWord: IStringPattern = patternsFactory.getStringPattern("class", 1, 1);
+    const identifier: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("[a-z]{1}[a-z0-9]*", 1, 1, false);
+    const classBlockStartToken: IStringPattern = patternsFactory.getStringPattern("{", 1, 1);
+
+    const classBlockEndToken: IStringPattern = patternsFactory.getStringPattern("}", 1, 1);
+    // const regExpAnyThingBetween: IRegExpStringPattern = patternsFactory.getRegExpStringPattern("\{(.*)\}", 0, 1, false);
+
+
+    // const patternsList: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
+    //   spaces0Null,
+      
+    //   patternsFactory.getOrderedFullMatchPatternsList([exportKeyWord, spaces1Null], 0, 1),
+
+    //   patternsFactory.getOrderedFullMatchPatternsList([abstractKeyWord, spaces1Null], 0, 1),
+
+    //   patternsFactory.getOrderedFullMatchPatternsList([classKeyWord, spaces1Null], 1, 1),
+
+    //   identifier,
+
+    //   patternsFactory.getOrderedFullMatchPatternsList([spaces0Null, classBlockStartToken], 1, 1),
+      
+    //   classBlockEndToken
+    //   // blockStartToken, regExpAnyThingBetween, blockEndToken
+
+    //   // stringPattern0,
+    //   // stringPattern1,
+    //   // regExpStringPattern1,
+    //   // stringPattern2,
+    //   // regExpStringPattern2,
+    //   // stringPattern2,
+    //   // regExpStringPattern3
+    //   // stringPattern3,
+    //   // stringPattern2,
+    //   // stringPattern4
+    // ], 1, null);
+
+    const languageTypescriptClassPattern: IPattern = this.languagePatternsFactory.getClass();
+
+    const spaceToken0Null: IPattern = patternsFactory.getStringPattern( 
+      " ",
+      0, null
+    );
+    const spaceToken1Null: IPattern = patternsFactory.getStringPattern( 
+      " ",
+      1, null
+    );    
+
+    const space0Null: IPattern = patternsFactory.getOrderedOneMatchPatternsList([
+      spaceToken1Null
+    ], 0, 1);
+
+    const space1Null: IPattern = patternsFactory.getOrderedOneMatchPatternsList([
+      spaceToken1Null
+    ], 1, 1);
+
+    // languageTypescriptClassPattern = patternsFactory.getOrderedFullMatchPatternsList([
+    //   space0Null,
+      
+    //   patternsFactory.getOrderedFullMatchPatternsList([
+    //     patternsFactory.getStringPattern("export", 1, 1), //getExportToken
+    //     space1Null
+    //   ], 1, 1)
+
+    // ], 1, null);
+
+    // const patternsList: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
+    //   spaces0Null,
+      
+    //   patternsFactory.getOrderedFullMatchPatternsList([exportKeyWord, spaces1Null], 0, 1),
+
+    //   patternsFactory.getOrderedFullMatchPatternsList([abstractKeyWord, spaces1Null], 0, 1),
+
+    //   patternsFactory.getOrderedFullMatchPatternsList([classKeyWord, spaces1Null], 1, 1),
+
+    //   identifier,
+
+    //   patternsFactory.getOrderedFullMatchPatternsList([spaces0Null, classBlockStartToken], 1, 1),
+      
+    //   classBlockEndToken
+    //   // blockStartToken, regExpAnyThingBetween, blockEndToken
+
+    //   // stringPattern0,
+    //   // stringPattern1,
+    //   // regExpStringPattern1,
+    //   // stringPattern2,
+    //   // regExpStringPattern2,
+    //   // stringPattern2,
+    //   // regExpStringPattern3
+    //   // stringPattern3,
+    //   // stringPattern2,
+    //   // stringPattern4
+    // ], 1, null);    
+
+    
+
+
+    const patternsList2: IPatternsList = patternsFactory.getOrderedFullMatchPatternsList([
+    ]);
+
+    this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, languageTypescriptClassPattern);
+
+    console.log(`stringToParse pointer position: ${stringToParse.getPointerPosition()}\n\n************** FIN ****************`);
+  }
+  */
+
+
   
 }
