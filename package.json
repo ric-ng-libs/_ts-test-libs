@@ -8,9 +8,13 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+
     "gg": "ng build ts-general",
     "pp": "ng build ts-parser",
-    "all": "npm run gg   &&   npm run pp"
+    "s": "ngs 4202",
+    "ps": "npm run pp   &&   npm run s",
+    "ball": "npm run gg   &&   npm run pp",
+    "all": "npm run ball  &&  npm run s"
   },
   "private": true,
   "dependencies": {
