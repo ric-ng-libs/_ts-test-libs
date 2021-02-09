@@ -180,7 +180,7 @@ export class TestTsParserComponent implements AfterViewInit {
       this.languagePatternsFactory.getClass()
     ]);
 
-    const result: IStringToParseMatchingsListOrNull = new StringToParseMatchingsList(pattern);
+    const result: IStringToParseMatchingsListOrNull = new StringToParseMatchingsList(patternsList);
     let partialResult: IStringToParseMatchingsListOrNull = null;
 const overRecurs: number = 2000;
 let nbRecurs: number = 0;
