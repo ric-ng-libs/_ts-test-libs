@@ -131,7 +131,16 @@ export class TestTsParserComponent implements AfterViewInit {
     const result: string = [
 
       //"<balise1></balise1> " 
-      " <balise1></balise1>  vv <balise2></balise2>  zz"
+
+      // " <balise1></balise1>  vv <balise2></balise2>  zz",
+      "  export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }   \n  export  \n\r    "
+       +"class Nom_Classe_Z5$ {}   abstract   class \n\r NomClasse5{  }  <balise3></balise3>  \r class NomClasse6{}",
+
+      " <balise1></balise1> class Nom_Classe { } x  class Nom_Classe2 { } <balise2></balise2>",
+
+      " <balise1></balise1>  vv <balise2></balise2>  zz",
+      " rr export   abstract \r  class \r\n NomClas$se4{ \n\r \r  \r\n\r\n }  q \n pp export",
+      "class Nom_Classe_Z5$ {}   abstract   class \n\r NomClasse5{  }  <balise3></balise3>  \r class NomClasse6{}"
 
     ].join(" ");
     return (result);
@@ -167,12 +176,13 @@ export class TestTsParserComponent implements AfterViewInit {
     : IStringToParseMatchingsListOrNull {
     
     const patternsList: IPatternsList = this.patternsFactory.getOrderedOneMatchPatternsList([
-      pattern
+      pattern,
+      this.languagePatternsFactory.getClass()
     ]);
 
     const result: IStringToParseMatchingsListOrNull = new StringToParseMatchingsList(pattern);
     let partialResult: IStringToParseMatchingsListOrNull = null;
-const overRecurs: number = 200;
+const overRecurs: number = 2000;
 let nbRecurs: number = 0;
     while(!stringToParse.isPointerAtTheEnd() && nbRecurs<overRecurs) {
 
