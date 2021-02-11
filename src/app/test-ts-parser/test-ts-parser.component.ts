@@ -204,8 +204,8 @@ let nbRecurs: number = 0;
     }
   
  
-    // this.loggerOutput();
-    console.log(result);
+    this.loggerOutput();
+    console.log("\n\n--------------\n\n", result);
 
 
     return(result);
