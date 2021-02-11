@@ -1,5 +1,7 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { StringToParseMatchingsList } from '../../../projects/ts-parser/src/lib/modeles/concreteClasses/StringToParseMatchingsList';
+import { IStringToParse } from '../../../dist/ts-parser/lib/modeles/interfaces/IStringToParse';
+import { IStringToParseMatchingsListOrNull } from '../../../projects/ts-parser/src/lib/modeles/types/StringToParseMatchingsListOrNullType';
 
 import { 
   IToScreenLogger ,
@@ -32,6 +34,9 @@ import {
   LanguageTypescriptStringToParseMatchingInterpreter,
 
   StringToParse,
+
+  APattern,
+  IStringToParseMatching
   
 } from '@ric-ng/ts-parser';
 
@@ -78,9 +83,9 @@ export class TestTsParserComponent implements AfterViewInit {
     // this.testLogger();
     // this.testNativeClassesEnhancement();
       
-    this.test1ForXML(this.getStringToParseForXML());
+    // this.test1ForXML(this.getStringToParseForXML());
     // this.test1ForClass(this.getStringToParseForClass());
-    // this.test1Basic(this.getStringToParse());
+    this.test1Basic(this.getStringToParse());
 
 
   }
@@ -121,8 +126,8 @@ export class TestTsParserComponent implements AfterViewInit {
     ]);
     const pattern2: IPattern = this.patternsFactory.getRegExpStringPattern("(A|B)"); 
 
-    this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, pattern1);
-    // this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, pattern2);
+    // this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, pattern1);
+    this.stringToParseMatchingsListOrNull = this.runParser(stringToParse, pattern2);
 
   }  
   
@@ -164,7 +169,7 @@ export class TestTsParserComponent implements AfterViewInit {
 
       // "ABAABB"
       //"AA"
-      "AB"
+      "ABAB  BB"
 
     ].join(" ");
     return (result);
@@ -176,8 +181,8 @@ export class TestTsParserComponent implements AfterViewInit {
     : IStringToParseMatchingsListOrNull {
     
     const patternsList: IPatternsList = this.patternsFactory.getOrderedOneMatchPatternsList([
-      pattern,
-      this.languagePatternsFactory.getClass()
+      pattern
+      // ,this.languagePatternsFactory.getClass()
     ]);
 
     const result: IStringToParseMatchingsListOrNull = new StringToParseMatchingsList(patternsList);
@@ -212,6 +217,7 @@ let nbRecurs: number = 0;
   }
 
 
+  
   private loggerOutput(): void {
 
     window.setTimeout(() => {
@@ -340,6 +346,59 @@ let nbRecurs: number = 0;
 
 
 
-
-
 }
+
+
+export interface IBlockPattern extends IPattern {
+  getStartPattern(): IPattern;
+  getEndPattern(): IPattern;
+  
+}
+export class BlockPattern extends APattern implements IBlockPattern {
+  protected getStringToParseNextMatching(stringToParse: IStringToParse): IStringToParseMatching {
+    throw new Error("Method not implemented.");
+  }
+
+  getStartPattern(): IPattern {
+    throw new Error("Method not implemented.");
+  }
+  getEndPattern(): IPattern {
+    throw new Error("Method not implemented.");
+  }
+  
+}
+
+
+export class temp {
+
+  runFind(blockPatterns: Array<IBlockPattern>, stringToParse: IStringToParse): void {
+    let matching: IStringToParseMatchingsListOrNull;
+
+    while(stringToParse.isPointerAtTheEnd()) {
+      
+      for(const blockPatternFindStart of blockPatterns) {
+        matching = blockPatternFindStart.getStartPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
+  
+        if (matching !== null) {
+          stringToParse.incrementPointerPosition( matching.getTotalLength() );
+
+
+          for(const blockPatternFindEnd of blockPatterns) {
+            matching = blockPatternFindStart.getStartPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
+      
+            if (matching !== null) {
+              stringToParse.incrementPointerPosition( matching.getTotalLength() );
+              
+            }
+    
+          }          
+          
+        }
+
+      }  
+    }
+  
+  }
+
+
+}  
