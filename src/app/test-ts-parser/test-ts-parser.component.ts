@@ -376,15 +376,15 @@ export class temp {
 
     while(stringToParse.isPointerAtTheEnd()) {
       
-      for(const blockPatternFindStart of blockPatterns) {
-        matching = blockPatternFindStart.getStartPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
+      for(const blockPattern of blockPatterns) {
+        matching = blockPattern.getStartPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
   
         if (matching !== null) {
           stringToParse.incrementPointerPosition( matching.getTotalLength() );
 
 
           for(const blockPatternFindEnd of blockPatterns) {
-            matching = blockPatternFindStart.getStartPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
+            matching = blockPattern.getStartPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
       
             if (matching !== null) {
               stringToParse.incrementPointerPosition( matching.getTotalLength() );
@@ -393,7 +393,7 @@ export class temp {
     
           }          
           
-        }
+        
 
       }  
     }
