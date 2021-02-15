@@ -371,32 +371,76 @@ export class BlockPattern extends APattern implements IBlockPattern {
 
 export class temp {
 
-  runFind(blockPatterns: Array<IBlockPattern>, stringToParse: IStringToParse): void {
-    let matching: IStringToParseMatchingsListOrNull;
+  getNextBlocks(blockPatterns: Array<IBlockPattern>, stringToParse: IStringToParse): void {
+    let startMatching: IStringToParseMatchingsListOrNull;
+    let endMatching: IStringToParseMatchingsListOrNull;
+    let matchingBlockPattern: IBlockPattern;
 
     while(stringToParse.isPointerAtTheEnd()) {
-      
-      for(const blockPattern of blockPatterns) {
-        matching = blockPattern.getStartPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
-  
-        if (matching !== null) {
-          stringToParse.incrementPointerPosition( matching.getTotalLength() );
 
+      startMatching = this.getNextBlockStart(blockPatterns, stringToParse);
+      if (startMatching !== null) {
+        stringToParse.incrementPointerPosition( startMatching.getTotalLength() );
 
-          for(const blockPatternFindEnd of blockPatterns) {
-            matching = blockPattern.getStartPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
-      
-            if (matching !== null) {
-              stringToParse.incrementPointerPosition( matching.getTotalLength() );
-              
+        matchingBlockPattern = startMatching.getPattern() as IBlockPattern; 
+
+        while(stringToParse.isPointerAtTheEnd()) {
+          endMatching = this.getNextBlockEnd(matchingBlockPattern, stringToParse);
+          if (endMatching === null) {
+            for(const blockPattern of blockPatterns) {
+              if (blockPattern !== matchingBlockPattern) {
+                endMatching = blockPattern.getEndPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
+                if (endMatching !== null) {
+                  throw new Error(`Unexpected block end.`);
+                }
+              }
             }
-    
-          }          
-          
-        
 
-      }  
+            stringToParse.incrementPointerPosition(1);
+
+          } else {
+            stringToParse.incrementPointerPosition( endMatching.getTotalLength() );
+          }
+
+        }
+
+  
+      } else {
+        stringToParse.incrementPointerPosition(1);
+
+      }
+          
+    }// End while
+  
+  }   
+
+  getNextBlockStart(blockPatterns: Array<IBlockPattern>, stringToParse: IStringToParse): IStringToParseMatchingsListOrNull {
+    let matching: IStringToParseMatchingsListOrNull;
+
+    for(const blockPattern of blockPatterns) {
+      matching = blockPattern.getStartPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
+
+      if (matching !== null) {
+        break;
+      }
+      
     }
+
+    return(matching);
+  }  
+
+
+  
+  getNextBlockEnd(
+    matchingBlockPattern: IBlockPattern, 
+    stringToParse: IStringToParse
+  ): IStringToParseMatchingsListOrNull {
+
+    const matching: IStringToParseMatchingsListOrNull =
+
+      matchingBlockPattern.getEndPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
+
+    return(matching);
   
   }
 
