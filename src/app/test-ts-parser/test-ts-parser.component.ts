@@ -1,13 +1,14 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { StringToParseMatchingsList } from '../../../projects/ts-parser/src/lib/modeles/concreteClasses/StringToParseMatchingsList';
-import { IStringToParse } from '../../../dist/ts-parser/lib/modeles/interfaces/IStringToParse';
-import { IStringToParseMatchingsListOrNull } from '../../../projects/ts-parser/src/lib/modeles/types/StringToParseMatchingsListOrNullType';
+import { GenericList } from '../../../projects/ts-general/src/lib/modeles/concreteClasses/GenericList';
+
 
 import { 
   IToScreenLogger ,
   ToScreenLogger,
   HTMLFactory,
-  LoggerMessageType
+  LoggerMessageType,
+  IGenericList
 } from '@ric-ng/ts-general';
 
 
@@ -368,28 +369,141 @@ export class BlockPattern extends APattern implements IBlockPattern {
   
 }
 
+export class MatchingBlock {
+  private endMatching: IStringToParseMatchingsList = null;
+  private childrenMatchingBlocks: Array<MatchingBlock> = [];
+
+  constructor(private startMatching: IStringToParseMatchingsListOrNull) {
+    
+  }
+  getStartMatching(): IStringToParseMatchingsListOrNull {
+    return(this.startMatching);
+  }
+
+  setEndMatching(endMatching: IStringToParseMatchingsListOrNull): MatchingBlock {
+    this.endMatching = endMatching;
+    return(this);
+  }  
+  getEndMatching(): IStringToParseMatchingsListOrNull {
+    return(this.endMatching);
+  } 
+  
+  addChildMatchingBlock(childMatchingBlock: MatchingBlock): MatchingBlock {
+    this.childrenMatchingBlocks.push(childMatchingBlock);
+    return(this);
+  }
+
+  isClosed(): boolean {
+    const result: boolean = (this.getEndMatching() !== null);
+    return(result);
+  }
+
+}
+
 
 export class temp {
 
-  getNextBlocks(blockPatterns: Array<IBlockPattern>, stringToParse: IStringToParse): void {
+  getNextMatchingBlockPatterns(blockPatterns: Array<IBlockPattern>, stringToParse: IStringToParse, parentMatching: MatchingBlock): void {
+    let startMatching: IStringToParseMatchingsListOrNull;
+    let endMatching: IStringToParseMatchingsListOrNull;
+    
+    let currentMatchingBlock: MatchingBlock;
+    // let lastMatchingBlock: MatchingBlock;
+    const allMatchingsBlocks: IGenericList<MatchingBlock> = new GenericList<MatchingBlock>();
+
+    while(!stringToParse.isPointerAtTheEnd()) {
+
+      startMatching = this.getNextBlockStartMatching(blockPatterns, stringToParse);
+      if (startMatching === null) {
+        endMatching = this.getNextBlockEndMatching(blockPatterns, stringToParse);
+        if (endMatching === null) {
+          stringToParse.incrementPointerPosition( 1 );
+
+        } else {
+          //Si endMatching.getPattern() === parentMatching.getStartMatching().getBlockPattern().getEndPattern()
+          if (parentMatching.getStartMatching().getPattern() === ) { 
+            stringToParse.incrementPointerPosition( endMatching.getTotalLength() );
+            break;
+          } else {
+            throw new Error("Fin inattendue!");
+          }
+        }
+
+      } else {
+        currentMatchingBlock = new MatchingBlock(startMatching);
+        parentMatching.addChildMatchingBlock(currentMatchingBlock);
+        stringToParse.incrementPointerPosition( startMatching.getTotalLength() );
+        this.getNextMatchingBlockPatterns(blockPatterns, stringToParse, currentMatchingBlock);
+        
+      }
+          
+    }// End while
+  
+  }  
+
+  getNextBlockStartMatching(blockPatterns: Array<IBlockPattern>, stringToParse: IStringToParse): IStringToParseMatchingsListOrNull {
+    let matching: IStringToParseMatchingsListOrNull = null;
+
+    for(const blockPattern of blockPatterns) {
+      matching = blockPattern.getStartPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
+
+      if (matching !== null) {
+        break;
+      }
+      
+    }
+
+    return(matching);
+  }  
+
+
+  getNextBlockEndMatching(blockPatterns: Array<IBlockPattern>, stringToParse: IStringToParse): IStringToParseMatchingsListOrNull {
+    let matching: IStringToParseMatchingsListOrNull = null;
+
+    for(const blockPattern of blockPatterns) {
+      matching = blockPattern.getEndPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
+
+      if (matching !== null) {
+        break;
+      }
+      
+    }
+
+    return(matching);
+  }  
+  
+  /*getNextBlockEndMatching(
+    blockPattern: IBlockPattern, 
+    stringToParse: IStringToParse
+  ): IStringToParseMatchingsListOrNull {
+
+    const matching: IStringToParseMatchingsListOrNull =
+
+      blockPattern.getEndPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
+
+    return(matching);
+  
+  }*/
+
+  /*getNextBlocks(blockPatterns: Array<IBlockPattern>, stringToParse: IStringToParse): void {
     let startMatching: IStringToParseMatchingsListOrNull;
     let endMatching: IStringToParseMatchingsListOrNull;
     let matchingBlockPattern: IBlockPattern;
 
-    while(stringToParse.isPointerAtTheEnd()) {
+    while(!stringToParse.isPointerAtTheEnd()) {
 
-      startMatching = this.getNextBlockStart(blockPatterns, stringToParse);
+      startMatching = this.getNextBlockStartMatching(blockPatterns, stringToParse);
       if (startMatching !== null) {
         stringToParse.incrementPointerPosition( startMatching.getTotalLength() );
 
         matchingBlockPattern = startMatching.getPattern() as IBlockPattern; 
 
-        while(stringToParse.isPointerAtTheEnd()) {
-          endMatching = this.getNextBlockEnd(matchingBlockPattern, stringToParse);
+        while(!stringToParse.isPointerAtTheEnd()) {
+          endMatching = this.getNextBlockEndMatching(matchingBlockPattern, stringToParse);
           if (endMatching === null) {
             for(const blockPattern of blockPatterns) {
               if (blockPattern !== matchingBlockPattern) {
-                endMatching = blockPattern.getEndPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
+                endMatching = this.getNextBlockEndMatching(blockPattern, stringToParse);
                 if (endMatching !== null) {
                   throw new Error(`Unexpected block end.`);
                 }
@@ -413,36 +527,6 @@ export class temp {
     }// End while
   
   }   
-
-  getNextBlockStart(blockPatterns: Array<IBlockPattern>, stringToParse: IStringToParse): IStringToParseMatchingsListOrNull {
-    let matching: IStringToParseMatchingsListOrNull;
-
-    for(const blockPattern of blockPatterns) {
-      matching = blockPattern.getStartPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
-
-      if (matching !== null) {
-        break;
-      }
-      
-    }
-
-    return(matching);
-  }  
-
-
-  
-  getNextBlockEnd(
-    matchingBlockPattern: IBlockPattern, 
-    stringToParse: IStringToParse
-  ): IStringToParseMatchingsListOrNull {
-
-    const matching: IStringToParseMatchingsListOrNull =
-
-      matchingBlockPattern.getEndPattern().listStringToParseNextConsecutiveMatchings(stringToParse);
-
-    return(matching);
-  
-  }
-
+*/
 
 }  
