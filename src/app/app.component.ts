@@ -12,8 +12,8 @@ export class AppComponent {
 
   libs: Array<Lib> = [
     {name: "ts-general"},
-    // {name: "ts-parser"},
-    // {name: "ts-pays"},
+    {name: "ts-parser"},
+    {name: "ts-pays"},
   ];
 
 }

@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "ball": "ng build ts-general  &&  ng build ts-parser  &&  ng build ts-pays",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

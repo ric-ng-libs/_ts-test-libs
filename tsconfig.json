@@ -23,6 +23,12 @@
     "paths": {
       "@ric-ng/ts-general": [
         "dist/ts-general"
+      ],
+      "@ric-ng/ts-parser": [
+        "dist/ts-parser"
+      ],
+      "@ric-ng/ts-pays": [
+        "dist/ts-pays"
       ]
 
     }

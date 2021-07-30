@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { StringToParseMatchingsList } from '../../../projects/ts-parser/src/lib/modeles/concreteClasses/StringToParseMatchingsList';
-import { GenericList } from '../../../projects/ts-general/src/lib/modeles/concreteClasses/GenericList';
+import { StringToParseMatchingsList } from '@ric-ng/ts-parser';
+import { GenericList } from '@ric-ng/ts-general';
 
 
 import { 
@@ -425,12 +425,12 @@ export class temp {
 
         } else {
           //Si endMatching.getPattern() === parentMatching.getStartMatching().getBlockPattern().getEndPattern()
-          if (parentMatching.getStartMatching().getPattern() === ) { 
-            stringToParse.incrementPointerPosition( endMatching.getTotalLength() );
-            break;
-          } else {
-            throw new Error("Fin inattendue!");
-          }
+          // if (parentMatching.getStartMatching().getPattern() === ) { 
+          //   stringToParse.incrementPointerPosition( endMatching.getTotalLength() );
+          //   break;
+          // } else {
+          //   throw new Error("Fin inattendue!");
+          // }
         }
 
       } else {

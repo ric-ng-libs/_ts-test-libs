@@ -136,6 +136,68 @@
           }
         }
       }
+    },
+    "ts-parser": {
+      "projectType": "library",
+      "root": "projects/ts-parser",
+      "sourceRoot": "projects/ts-parser/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ts-parser/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ts-parser/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ts-parser/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ts-parser/src/test.ts",
+            "tsConfig": "projects/ts-parser/tsconfig.spec.json",
+            "karmaConfig": "projects/ts-parser/karma.conf.js"
+          }
+        }
+      }
+    },
+    "ts-pays": {
+      "projectType": "library",
+      "root": "projects/ts-pays",
+      "sourceRoot": "projects/ts-pays/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ts-pays/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ts-pays/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ts-pays/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ts-pays/src/test.ts",
+            "tsConfig": "projects/ts-pays/tsconfig.spec.json",
+            "karmaConfig": "projects/ts-pays/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "TS"

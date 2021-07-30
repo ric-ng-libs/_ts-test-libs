@@ -9,8 +9,8 @@ import { AppComponent } from './app.component';
 import { TestCommunComponent } from './test-commun/test-commun.component';
 
 import { TestTsGeneralComponent } from './test-ts-general/test-ts-general.component';
-// import { TestTsParserComponent } from './test-ts-parser/test-ts-parser.component';
-// import { TestTsPaysComponent } from './test-ts-pays/test-ts-pays.component';
+import { TestTsParserComponent } from './test-ts-parser/test-ts-parser.component';
+import { TestTsPaysComponent } from './test-ts-pays/test-ts-pays.component';
 
 
 
@@ -22,8 +22,8 @@ import { TestTsGeneralComponent } from './test-ts-general/test-ts-general.compon
     TestCommunComponent,
     
     TestTsGeneralComponent,
-    // TestTsParserComponent,
-    // TestTsPaysComponent
+    TestTsParserComponent,
+    TestTsPaysComponent
   ],
   imports: [
     BrowserModule,
