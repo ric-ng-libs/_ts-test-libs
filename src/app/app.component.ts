@@ -6,14 +6,14 @@ type Lib = { name: string; version?: string; };
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
 
   libs: Array<Lib> = [
     {name: "ts-general"},
-    {name: "ts-parser"},
-    {name: "ts-pays"},
+    // {name: "ts-parser"},
+    // {name: "ts-pays"},
   ];
 
 }

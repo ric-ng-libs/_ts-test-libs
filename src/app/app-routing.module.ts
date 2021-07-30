@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TestTsGeneralComponent } from './test-ts-general/test-ts-general.component';
-import { TestTsParserComponent } from './test-ts-parser/test-ts-parser.component';
-import { TestTsPaysComponent } from './test-ts-pays/test-ts-pays.component';
+// import { TestTsParserComponent } from './test-ts-parser/test-ts-parser.component';
+// import { TestTsPaysComponent } from './test-ts-pays/test-ts-pays.component';
 
-const initialComponent: any = TestTsParserComponent;
+// const initialComponent: any = TestTsParserComponent;
+const initialComponent: any = TestTsGeneralComponent;
 
 const routes: Routes = [
 
@@ -19,7 +20,7 @@ const routes: Routes = [
     component: TestTsGeneralComponent
   },
 
-  {
+  /*{
     path: 'test-ts-parser',
     component: TestTsParserComponent
   },  
@@ -27,7 +28,7 @@ const routes: Routes = [
   {
     path: 'test-ts-pays',
     component: TestTsPaysComponent
-  }
+  }*/
 ];
 
 @NgModule({

@@ -403,7 +403,11 @@ export class MatchingBlock {
 
 export class temp {
 
-  getNextMatchingBlockPatterns(blockPatterns: Array<IBlockPattern>, stringToParse: IStringToParse, parentMatching: MatchingBlock): void {
+  getNextMatchingBlockPatterns(
+    blockPatterns: Array<IBlockPattern>, 
+    stringToParse: IStringToParse, 
+    parentMatching: MatchingBlock = null
+  ): void {
     let startMatching: IStringToParseMatchingsListOrNull;
     let endMatching: IStringToParseMatchingsListOrNull;
     
