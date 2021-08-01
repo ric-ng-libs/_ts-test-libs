@@ -10,7 +10,6 @@ import { TestCommunComponent } from './test-commun/test-commun.component';
 
 import { TestTsGeneralComponent } from './test-ts-general/test-ts-general.component';
 import { TestTsParserComponent } from './test-ts-parser/test-ts-parser.component';
-import { TestTsPaysComponent } from './test-ts-pays/test-ts-pays.component';
 
 
 
@@ -23,7 +22,6 @@ import { TestTsPaysComponent } from './test-ts-pays/test-ts-pays.component';
     
     TestTsGeneralComponent,
     TestTsParserComponent,
-    TestTsPaysComponent
   ],
   imports: [
     BrowserModule,
